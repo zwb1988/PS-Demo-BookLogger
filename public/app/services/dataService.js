@@ -2,8 +2,10 @@
     angular.module('app')
             .factory('dataService', dataService);
 
-    function dataService() {
+    function dataService(logger) {
         function getAllBooks() {
+            logger.output('Getting all books');
+            
             return [
                 {
                     book_id: 1,
@@ -23,9 +25,10 @@
                 }
             ];
         }
-        ;
 
         function getAllReaders() {
+            logger.output('Getting all readers');
+            
             return [
                 {
                     reader_id: 1,
@@ -45,12 +48,12 @@
                 }
             ];
         }
-        ;
 
         return {
             getAllBooks: getAllBooks,
             getAllReaders: getAllReaders
         };
     }
-    ;
+    
+    dataService.$inject = ['logger'];
 }());
