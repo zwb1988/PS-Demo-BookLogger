@@ -11,12 +11,12 @@
     // Instead of creating provider in the configuration section with injected
     // $provide, we can use the provider method exposed with the module.
     // E.g. $provide.provider() => app.provider()
-    app.provider('books', function () {
+    app.provider('books', function (constants) {
         this.$get = function () {
-            var appName = 'Book Logger';
-            var appDesc = 'Track which books you read.';
+            var appName = constants.APP_TITLE;
+            var appDesc = constants.APP_DESCRIPTION;
 
-            var version = '1.0';
+            var version = constants.APP_VERSION;
             if (includeVersionInTitle) {
                 appName += ' ' + version;
             }
@@ -33,7 +33,9 @@
         };
     });
 
-    app.config(function (booksProvider) {
+    app.config(function (booksProvider, constants) {
         booksProvider.setIncludeVersionInTitle(true);
+        console.log('Title from constants service: ' + constants.APP_TITLE);
+        //console.log(dataServiceProvider.$get);
     });
 }());
