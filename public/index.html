@@ -8,6 +8,12 @@
         <link href="css/bootstrap-theme.min.css" rel="stylesheet" >
     </head>
     <body ng-app="app">
+        <div ng-controller="BooksController as books">
+            <h1>Hello {{books.appName}}!</h1>
+        </div>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="app/app.js"></script>
+        <script src="app/books/BooksController.js"></script>
     </body>
 </html>
