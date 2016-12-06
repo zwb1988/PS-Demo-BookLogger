@@ -2,7 +2,7 @@
 <div>
     <ul>
         <li ng-repeat="book in books.allBooks">
-            {{book.title}} - {{book.author}} 
+            {{book.title}} - {{book.author}} - {{book.year_published}}
             &nbsp;<a ng-href="#/EditBook/{{book.book_id}}">Edit</a>
         </li>
     </ul>

@@ -32,7 +32,7 @@
         }
 
         function errorCallback(error) {
-            //console.log('Error message: ' + error);
+            console.log('Error message: ' + error);
         }
 
         function getAllBooksComplete() {
