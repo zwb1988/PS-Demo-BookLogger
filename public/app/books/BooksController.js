@@ -6,9 +6,9 @@
 
 
 (function () {
-    angular.module('app').controller('BooksController', ['books', 'dataService', 'badgeService', '$q', BooksController]);
+    angular.module('app').controller('BooksController', ['books', 'dataService', 'badgeService', '$cookies', '$cookieStore', '$log', BooksController]);
 
-    function BooksController(books, dataService, badgeService, $q) {
+    function BooksController(books, dataService, badgeService, $cookies, $cookieStore, $log) {
         var vm = this;
 
         vm.appName = books.appName;
@@ -70,5 +70,15 @@
 //        }
 
         vm.getBadge = badgeService.retrieveBadge;
+
+        vm.favouriteBook = $cookies.favouriteBook;
+
+        vm.lastEdited = $cookieStore.get('lastEdited');
+        
+//        $log.log('logging with log');
+//        $log.info('logging with info');
+//        $log.warn('logging with warn');
+//        $log.error('logging with error');
+//        $log.debug('logging with debug');
     }
 }());

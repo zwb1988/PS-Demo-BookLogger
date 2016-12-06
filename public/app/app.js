@@ -6,7 +6,7 @@
 
 
 (function () {
-    var app = angular.module('app', ['ngRoute']);
+    var app = angular.module('app', ['ngRoute', 'ngCookies']);
 
     // Instead of creating provider in the configuration section with injected
     // $provide, we can use the provider method exposed with the module.
@@ -33,8 +33,10 @@
             };
         }]);
 
-    app.config(['booksProvider', '$routeProvider', function (booksProvider, $routeProvider) {
+    app.config(['booksProvider', '$routeProvider', '$logProvider', function (booksProvider, $routeProvider, $logProvider) {
             booksProvider.setIncludeVersionInTitle(true);
+            $logProvider.debugEnabled(true); //enable disable $log.debug
+            
             $routeProvider
                     .when('/', {
                         templateUrl: '/app/templates/books.html',
@@ -52,7 +54,6 @@
                         controllerAs: 'bookEditor',
                         resolve: {
                             books: function (dataService) {
-                                throw 'error getting books';
                                 return dataService.getAllBooks();
                             }
                         }
@@ -62,7 +63,7 @@
 
     app.run(['$rootScope', function ($rootScope) {
             $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-                console.log('successfuly changed routes');
+                //console.log('successfuly changed routes');
             });
             $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
                 console.log('error changing routes');
