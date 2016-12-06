@@ -28,15 +28,15 @@
 //        }
 
         function getBooksNotification(notification) {
-            console.log(notification);
+            //console.log(notification);
         }
 
         function errorCallback(error) {
-            console.log('Error message: ' + error);
+            //console.log('Error message: ' + error);
         }
 
         function getAllBooksComplete() {
-            console.log('getAllBooks has completed');
+            //console.log('getAllBooks has completed');
         }
 
         dataService.getAllReaders()
@@ -49,7 +49,7 @@
         }
 
         function getAllReadersComplete() {
-            console.log('getAllReaders has completed');
+            //console.log('getAllReaders has completed');
         }
 
 //        // use $q.all for all promise at once
