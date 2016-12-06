@@ -8,5 +8,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(rootPath));
 
-app.listen(8000);
-console.log("Listening on port 8000...");
+var portNumber = 8000;
+app.listen(portNumber);
+console.log("Listening on port " + portNumber + "...");
