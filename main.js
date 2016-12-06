@@ -13,7 +13,7 @@ app.use(express.static(rootPath));
 app.get('/api/books', api.getAllBooks);
 app.get('/api/books/:id', api.getBook);
 app.get('/api/readers', api.getAllReaders);
-app.post('/api/books/:id', api.updateBook);
+app.put('/api/books/:id', api.updateBook);
 
 var portNumber = 8000;
 app.listen(portNumber);

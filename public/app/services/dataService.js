@@ -38,7 +38,7 @@
 
         function updateBook(book) {
             return $http({
-                method: 'POST',
+                method: 'PUT',
                 url: 'api/books/' + book.book_id,
                 data: book
             }).then(updateBookSuccess).catch(updateError);
