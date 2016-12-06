@@ -6,9 +6,12 @@
 
 
 (function () {
-    angular.module('app').controller('BooksController', ['books', 'dataService', 'badgeService', '$cookies', '$cookieStore', '$log', BooksController]);
+    angular.module('app').controller('BooksController', ['books',
+        'dataService', 'badgeService', '$cookies', '$cookieStore',
+        '$log', '$route', BooksController]);
 
-    function BooksController(books, dataService, badgeService, $cookies, $cookieStore, $log) {
+    function BooksController(books, dataService, badgeService,
+            $cookies, $cookieStore, $log, $route) {
         var vm = this;
 
         vm.appName = books.appName;
@@ -74,11 +77,26 @@
         vm.favouriteBook = $cookies.favouriteBook;
 
         vm.lastEdited = $cookieStore.get('lastEdited');
-        
+
 //        $log.log('logging with log');
 //        $log.info('logging with info');
 //        $log.warn('logging with warn');
 //        $log.error('logging with error');
 //        $log.debug('logging with debug');
+
+        vm.deleteBook = function (bookID) {
+            dataService.deleteBook(bookID)
+                    .then(deleteBookSuccess)
+                    .catch(deleteBookError);
+        }
+
+        function deleteBookSuccess(message) {
+            $log.info(message);
+            $route.reload();
+        }
+
+        function deleteBookError(message) {
+            $log.error(message);
+        }
     }
 }());
