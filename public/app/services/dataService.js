@@ -10,8 +10,18 @@
                 url: 'api/books',
                 headers: {
                     'PS-BookLogger-Version': constants.APP_VERSION
-                }
+                },
+                transformResponse: transformGetBooks
             }).then(sendResponseData).catch(sendError);
+        }
+
+        function transformGetBooks(data, headerGetter) {
+            var transformed = angular.fromJson(data);
+            transformed.forEach(function (value, index, array) {
+                value.dateDownloaded = new Date();
+            });
+            //console.log(transformed);
+            return transformed;
         }
 
         function getBookByID(bookId) {
@@ -53,8 +63,15 @@
         }
 
         function addBook(book) {
-            return $http.post('api/books', book)
-                    .then(addBookSuccess).catch(addBookError);
+            return $http.post('api/books', book, {
+                transformRequest: transformAddBook
+            }).then(addBookSuccess).catch(addBookError);
+        }
+        
+        function transformAddBook(data, headerGetter){
+            data.newBook = true;
+            console.log(data);
+            return JSON.stringify(data);
         }
 
         function addBookSuccess(response) {
