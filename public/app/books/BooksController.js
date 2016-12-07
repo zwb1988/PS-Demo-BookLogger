@@ -8,10 +8,10 @@
 (function () {
     angular.module('app').controller('BooksController', ['books',
         'dataService', 'badgeService', '$cookies', '$cookieStore',
-        '$log', '$route', 'booksResource', BooksController]);
+        '$log', '$route', 'booksResource', 'currentUser', BooksController]);
 
     function BooksController(books, dataService, badgeService,
-            $cookies, $cookieStore, $log, $route, booksResource) {
+            $cookies, $cookieStore, $log, $route, booksResource, currentUser) {
         var vm = this;
 
         vm.appName = books.appName;
@@ -85,7 +85,8 @@
 
         vm.favouriteBook = $cookies.favouriteBook;
 
-        vm.lastEdited = $cookieStore.get('lastEdited');
+//        vm.lastEdited = $cookieStore.get('lastEdited');
+        vm.currentUser = currentUser;
 
 //        $log.log('logging with log');
 //        $log.info('logging with info');
