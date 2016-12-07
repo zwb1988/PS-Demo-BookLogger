@@ -33,14 +33,16 @@
             };
         }]);
 
-    app.config(['booksProvider', '$routeProvider', '$logProvider', 
-        '$httpProvider', function (booksProvider, $routeProvider, 
-        $logProvider, $httpProvider) {
+    app.config(['booksProvider', '$routeProvider', '$logProvider',
+        '$httpProvider', '$provide', function (booksProvider, $routeProvider,
+                $logProvider, $httpProvider, $provide) {
+            $provide.decorator('$log', ['$delegate', 'books', logDecorator]);
+
             booksProvider.setIncludeVersionInTitle(true);
-            $logProvider.debugEnabled(false); //enable disable $log.debug
-            
+            $logProvider.debugEnabled(true); //enable disable $log.debug
+
             $httpProvider.interceptors.push('bookLoggerInterceptor');
-            
+
             $routeProvider
                     .when('/', {
                         templateUrl: '/app/templates/books.html',
@@ -64,6 +66,38 @@
                     })
                     .otherwise('/');
         }]);
+
+    function logDecorator($delegate, books) {
+        function log(message) {
+            message += ' - ' + new Date() + ' (' + books.appName + ')';
+            $delegate.log(message);
+        }
+        function info(message) {
+            $delegate.log(message);
+        }
+        function warn(message) {
+            $delegate.log(message);
+        }
+        function error(message) {
+            $delegate.log(message);
+        }
+        function debug(message) {
+            $delegate.log(message);
+        }
+        function awesome(message) {
+            message = 'Awesome!!! - ' + message;
+            $delegate.debug(message);
+        }
+
+        return {
+            log: log,
+            info: info,
+            warn: warn,
+            error: error,
+            debug: debug,
+            awesome: awesome
+        };
+    }
 
     app.run(['$rootScope', function ($rootScope) {
             $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
