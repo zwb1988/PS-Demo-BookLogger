@@ -1,8 +1,57 @@
 (function () {
     angular.module('app')
-            .factory('dataService', ['$q', '$http', 'constants', dataService]);
+            .factory('dataService', ['$q', '$http', 'constants',
+                '$cacheFactory', dataService]);
 
-    function dataService($q, $http, constants) {
+    function dataService($q, $http, constants, $cacheFactory) {
+
+        function getUserSummary() {
+            var deferred = $q.defer();
+
+            var dataCache = $cacheFactory.get('bookLoggerCache');
+            if (!dataCache) {
+                dataCache = $cacheFactory('bookLoggerCache');
+            }
+
+            var summaryFromCache = dataCache.get('summary');
+            if (summaryFromCache) {
+                console.log('returning summary from cache');
+                deferred.resolve(summaryFromCache);
+            } else {
+                var booksPromise = getAllBooks();
+                var readersPromise = getAllReaders();
+
+                $q.all([booksPromise, readersPromise])
+                        .then(function (bookLoggerData) {
+                            var allBooks = bookLoggerData[0];
+                            var allReaders = bookLoggerData[1];
+
+                            var grandTotalMinutes = 0;
+
+                            allReaders.forEach(function (value, index, array) {
+                                grandTotalMinutes += value.totalMinutesRead;
+                            });
+
+                            var summaryData = {
+                                bookCount: allBooks.length,
+                                readerCount: allReaders.length,
+                                grandTotalMinutes: grandTotalMinutes
+                            };
+
+                            dataCache.put('summary', summaryData);
+
+                            deferred.resolve(summaryData);
+                        });
+            }
+            return deferred.promise;
+        }
+
+        function deleteSummaryFromCache() {
+            var dataCache = $cacheFactory.get('bookLoggerCache');
+            if (dataCache) {
+                dataCache.remove('summary');
+            }
+        }
 
         function getAllBooks() {
             return $http({
@@ -46,6 +95,7 @@
         }
 
         function updateBook(book) {
+            deleteSummaryFromCache();
             return $http({
                 method: 'PUT',
                 url: 'api/books/' + book.book_id,
@@ -63,12 +113,14 @@
         }
 
         function addBook(book) {
+            deleteSummaryFromCache();
+            
             return $http.post('api/books', book, {
                 transformRequest: transformAddBook
             }).then(addBookSuccess).catch(addBookError);
         }
-        
-        function transformAddBook(data, headerGetter){
+
+        function transformAddBook(data, headerGetter) {
             data.newBook = true;
             console.log(data);
             return JSON.stringify(data);
@@ -84,6 +136,8 @@
         }
 
         function deleteBook(bookID) {
+            deleteSummaryFromCache();
+            
             return $http({
                 method: 'DELETE',
                 url: 'api/books/' + bookID
@@ -104,7 +158,8 @@
             getBookByID: getBookByID,
             updateBook: updateBook,
             addBook: addBook,
-            deleteBook: deleteBook
+            deleteBook: deleteBook,
+            getUserSummary: getUserSummary
         };
     }
 

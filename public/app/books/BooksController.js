@@ -15,7 +15,14 @@
         var vm = this;
 
         vm.appName = books.appName;
-        
+
+        dataService.getUserSummary().then(getUserSummarySuccess);
+
+        function getUserSummarySuccess(summaryData) {
+            $log.log(summaryData);
+            vm.summaryData = summaryData;
+        }
+
 //        dataService.getAllBooks()
 //                //.then(getBooksSuccess, getBooksError, getBooksNotification)
 //                .then(getBooksSuccess, null, getBooksNotification)
