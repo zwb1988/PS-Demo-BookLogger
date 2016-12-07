@@ -57,11 +57,17 @@
             return $http({
                 method: 'GET',
                 url: 'api/books',
+                cache: true,
                 headers: {
                     'PS-BookLogger-Version': constants.APP_VERSION
                 },
                 transformResponse: transformGetBooks
             }).then(sendResponseData).catch(sendError);
+        }
+
+        function deleteAllBooksResponseFromCache() {
+            var httpCache = $cacheFactory.get('$http');
+            httpCache.remove('api/books');
         }
 
         function transformGetBooks(data, headerGetter) {
@@ -96,6 +102,8 @@
 
         function updateBook(book) {
             deleteSummaryFromCache();
+            deleteAllBooksResponseFromCache();
+            
             return $http({
                 method: 'PUT',
                 url: 'api/books/' + book.book_id,
@@ -114,7 +122,8 @@
 
         function addBook(book) {
             deleteSummaryFromCache();
-            
+            deleteAllBooksResponseFromCache();
+
             return $http.post('api/books', book, {
                 transformRequest: transformAddBook
             }).then(addBookSuccess).catch(addBookError);
@@ -137,7 +146,8 @@
 
         function deleteBook(bookID) {
             deleteSummaryFromCache();
-            
+            deleteAllBooksResponseFromCache();
+
             return $http({
                 method: 'DELETE',
                 url: 'api/books/' + bookID
