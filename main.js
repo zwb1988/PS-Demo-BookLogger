@@ -15,7 +15,7 @@ app.get('/api/books/:id', api.getBook);
 app.get('/api/readers', api.getAllReaders);
 app.put('/api/books/:id', api.updateBook);
 app.post('/api/books', api.addBook);
-app.delete('/api/books/:id', api.deleteBook)
+app.delete('/api/books/:id', api.deleteBook);
 
 var portNumber = 8000;
 app.listen(portNumber);

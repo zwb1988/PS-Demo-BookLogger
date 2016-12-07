@@ -15,10 +15,8 @@
         }
 
         function getBookByID(bookId) {
-            return $http({
-                method: 'GET',
-                url: 'api/books/' + bookId
-            }).then(sendResponseData).catch(sendError);
+            return $http.get('api/books/' + bookId)
+                    .then(sendResponseData).catch(sendError);
         }
 
         function getAllReaders() {
@@ -55,11 +53,8 @@
         }
 
         function addBook(book) {
-            return $http({
-                method: 'POST',
-                url: 'api/books',
-                data: book
-            }).then(addBookSuccess).catch(addBookError);
+            return $http.post('api/books', book)
+                    .then(addBookSuccess).catch(addBookError);
         }
 
         function addBookSuccess(response) {

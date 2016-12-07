@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/main.js</file>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/public/app/services/dataService.js</file>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/public/app/services/loggerService.js</file>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/public/app/services/constantService.js</file>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/public/app/app.js</file>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/public/app/services/badgeSerice.js</file>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/public/app/books/BooksController.js</file>
-            <file>file:/C:/Users/Wenbo/Documents/NetBeansProjects/BookLogger/public/index.html</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
