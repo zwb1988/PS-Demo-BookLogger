@@ -8,19 +8,21 @@
 (function () {
     angular.module('app').controller('BooksController', ['books',
         'dataService', 'badgeService', '$cookies', '$cookieStore',
-        '$log', '$route', BooksController]);
+        '$log', '$route', 'booksResource', BooksController]);
 
     function BooksController(books, dataService, badgeService,
-            $cookies, $cookieStore, $log, $route) {
+            $cookies, $cookieStore, $log, $route, booksResource) {
         var vm = this;
 
         vm.appName = books.appName;
+        
+//        dataService.getAllBooks()
+//                //.then(getBooksSuccess, getBooksError, getBooksNotification)
+//                .then(getBooksSuccess, null, getBooksNotification)
+//                .catch(errorCallback)
+//                .finally(getAllBooksComplete);
 
-        dataService.getAllBooks()
-                //.then(getBooksSuccess, getBooksError, getBooksNotification)
-                .then(getBooksSuccess, null, getBooksNotification)
-                .catch(errorCallback)
-                .finally(getAllBooksComplete);
+        vm.allBooks = booksResource.query();
 
         function getBooksSuccess(books) {
             vm.allBooks = books;

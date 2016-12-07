@@ -6,7 +6,7 @@
 
 
 (function () {
-    var app = angular.module('app', ['ngRoute', 'ngCookies']);
+    var app = angular.module('app', ['ngRoute', 'ngCookies', 'ngResource']);
 
     // Instead of creating provider in the configuration section with injected
     // $provide, we can use the provider method exposed with the module.

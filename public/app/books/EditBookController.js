@@ -2,15 +2,19 @@
     angular.module('app')
             .controller('EditBookController',
                     ['$routeParams', 'books', '$cookies', '$cookieStore',
-                        'dataService', '$log', '$location', EditBookController]);
+                        'dataService', '$log', '$location', 'booksResource',
+                        EditBookController]);
 
     function EditBookController($routeParams, books, $cookies, $cookieStore,
-            dataService, $log, $location) {
+            dataService, $log, $location, booksResource) {
         var vm = this;
 
-        dataService.getBookByID($routeParams.bookID)
-                .then(getBookSuccess)
-                .catch(getBookError);
+//        dataService.getBookByID($routeParams.bookID)
+//                .then(getBookSuccess)
+//                .catch(getBookError);
+
+        vm.currentBook = booksResource.get({book_id: $routeParams.bookID});
+        $log.log(vm.currentBook);
 
         function getBookSuccess(book) {
             vm.currentBook = book;
@@ -22,9 +26,11 @@
         }
 
         vm.saveBook = function () {
-            dataService.updateBook(vm.currentBook)
-                    .then(updateBookSuccess)
-                    .catch(updateBookError);
+//            dataService.updateBook(vm.currentBook)
+//                    .then(updateBookSuccess)
+//                    .catch(updateBookError);
+            vm.currentBook.$update();
+            $location.path('/');
         };
 
         function updateBookSuccess(message) {
